@@ -1,4 +1,4 @@
-# Projekt Kumulatywny Quiz
+# Projekt Kumulatywny Quiz - Micha³ Graczyk
 
 1. Programowanie obiektowe:
 Zaprojektuj g³ówne klasy systemu quizów, reprezentuj¹ce Quiz, Pytanie i OdpowiedŸ, stosuj¹c odpowiednie zasady programowania obiektowego.
