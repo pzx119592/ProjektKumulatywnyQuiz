@@ -1,0 +1,68 @@
+﻿<Window x:Class="ProjektKumulatywnyQuiz.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Quiz WPF" Height="500" Width="600">
+
+    <!-- Grid dzieli okno na 3 wiersze:
+         1. Pasek z przyciskami (Dodaj, Załaduj, Szukaj)
+         2. Lista quizów (ListBox)
+         3. Szczegóły quizu (pytania i odpowiedzi) -->
+    <Grid Margin="12">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- Pasek przycisków -->
+            <RowDefinition Height="2*"/>
+            <!-- Lista quizów -->
+            <RowDefinition Height="3*"/>
+            <!-- Szczegóły quizu -->
+        </Grid.RowDefinitions>
+
+        <!-- Zadanie 4: WPF - interfejs użytkownika -->
+        <!-- TextBox: wpisujemy tytuł quizu -->
+        <!-- Button Dodaj: zapisuje quiz do bazy -->
+        <!-- Button Załaduj: pobiera wszystkie quizy z bazy -->
+        <!-- Button Szukaj: filtruje quizy po tytule (LINQ) -->
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+            <TextBox x:Name="TitleBox" Width="250" Text="Historia" />
+            <Button x:Name="AddQuizBtn" Content="Dodaj" Margin="8,0,0,0" Width="80"/>
+            <Button x:Name="LoadBtn" Content="Załaduj" Margin="8,0,0,0" Width="80"/>
+            <Button x:Name="SearchBtn" Content="Szukaj" Margin="8,0,0,0" Width="80"/>
+        </StackPanel>
+
+        <!-- Lista quizów -->
+        <!-- Każdy quiz pokazuje Id, tytuł i liczbę pytań -->
+        <!-- Podwójne kliknięcie otwiera szczegóły quizu -->
+        <ListBox x:Name="QuizList" Grid.Row="1" MouseDoubleClick="QuizList_MouseDoubleClick"/>
+
+        <!-- Szczegóły quizu -->
+        <!-- QuizTitle: pokazuje tytuł wybranego quizu -->
+        <!-- QuestionsList: pokazuje pytania i odpowiedzi -->
+        <!-- RadioButton: tylko jedna odpowiedź na pytanie (GroupName = Question.Id) -->
+        <!-- CheckBtn: sprawdza poprawność zaznaczonych odpowiedzi -->
+        <StackPanel Grid.Row="2">
+            <TextBlock x:Name="QuizTitle" FontSize="16" FontWeight="Bold" Margin="0,0,0,8"/>
+            <ItemsControl x:Name="QuestionsList">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Margin="0,0,0,12">
+                            <!-- Tekst pytania -->
+                            <TextBlock Text="{Binding Text}" FontWeight="Bold"/>
+                            <!-- Lista odpowiedzi -->
+                            <ItemsControl ItemsSource="{Binding Answers}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <!-- RadioButton: jedna odpowiedź na pytanie -->
+                                        <RadioButton Content="{Binding Text}" 
+                                                     GroupName="{Binding DataContext.Id, RelativeSource={RelativeSource AncestorType=StackPanel}}" 
+                                                     Tag="{Binding IsCorrect}"/>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            <Button x:Name="CheckBtn" Content="Sprawdź odpowiedzi" Margin="0,12,0,0" Width="150"/>
+        </StackPanel>
+    </Grid>
+</Window>
