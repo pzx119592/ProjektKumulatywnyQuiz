@@ -10,7 +10,6 @@
             <RowDefinition Height="3*"/>
         </Grid.RowDefinitions>
 
-        <!-- Pasek przycisków w Gridzie -->
         <Grid Grid.Row="0" Margin="0,0,0,8">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="250"/>
@@ -29,19 +28,15 @@
             <Button x:Name="DeleteBtn" Grid.Column="5" Content="Usuń"/>
         </Grid>
 
-        <!-- Lista quizów -->
         <ListBox x:Name="QuizList" Grid.Row="1" MouseDoubleClick="QuizList_MouseDoubleClick"/>
 
-        <!-- Szczegóły quizu -->
         <StackPanel Grid.Row="2">
             <TextBlock x:Name="QuizTitle" FontSize="16" FontWeight="Bold" Margin="0,0,0,8"/>
             <ItemsControl x:Name="QuestionsList">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Margin="0,0,0,12">
-                            <!-- Tekst pytania -->
                             <TextBlock Text="{Binding Text}" FontWeight="Bold"/>
-                            <!-- Lista odpowiedzi -->
                             <ItemsControl ItemsSource="{Binding Answers}">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>

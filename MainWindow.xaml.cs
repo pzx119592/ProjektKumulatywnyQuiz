@@ -66,7 +66,9 @@ namespace ProjektKumulatywnyQuiz
                 .ThenInclude(a => a.Answers)
                 .ToList();
 
-            QuizList.ItemsSource = quizzes.Select(q => $"{q.Id}: {q.Title} ({q.Questions.Count} pytań)").ToList();
+            QuizList.ItemsSource = quizzes
+                .Select(q => $"{q.Id}: {q.Title} ({q.Questions.Count} pytań)")
+                .ToList();
         }
 
         // SEARCH (LINQ)
@@ -79,7 +81,9 @@ namespace ProjektKumulatywnyQuiz
                 query = query.Where(q => EF.Functions.Like(q.Title, $"%{term}%"));
 
             var result = query.ToList();
-            QuizList.ItemsSource = result.Select(q => $"{q.Id}: {q.Title}").ToList();
+            QuizList.ItemsSource = result
+                .Select(q => $"{q.Id}: {q.Title}")
+                .ToList();
         }
 
         // READ (szczegóły quizu)
@@ -188,6 +192,7 @@ namespace ProjektKumulatywnyQuiz
         }
     }
 
+    // Helper do wyszukiwania kontrolek w drzewie wizualnym
     public static class VisualTreeHelperExtensions
     {
         public static IEnumerable<T> FindVisualChildren<T>(this DependencyObject depObj) where T : DependencyObject
