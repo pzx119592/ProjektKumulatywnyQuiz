@@ -5,6 +5,8 @@ VisualStudioVersion = 17.14.36717.8
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjektKumulatywnyQuiz", "ProjektKumulatywnyQuiz.csproj", "{25A27D2A-E276-457A-B21E-92F982E7A2AA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebQuiz", "..\WebQuiz\WebQuiz.csproj", "{2CA06E26-5FDB-4072-A3CC-49D0636C9F3B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{25A27D2A-E276-457A-B21E-92F982E7A2AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{25A27D2A-E276-457A-B21E-92F982E7A2AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{25A27D2A-E276-457A-B21E-92F982E7A2AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2CA06E26-5FDB-4072-A3CC-49D0636C9F3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2CA06E26-5FDB-4072-A3CC-49D0636C9F3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2CA06E26-5FDB-4072-A3CC-49D0636C9F3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2CA06E26-5FDB-4072-A3CC-49D0636C9F3B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
