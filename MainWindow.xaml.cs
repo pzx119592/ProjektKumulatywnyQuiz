@@ -8,6 +8,10 @@ namespace ProjektKumulatywnyQuiz
     public partial class MainWindow : Window
     {
         private readonly QuizDbContext _db;
+
+        // --- ZMIANA 1: Deklaracja Repozytorium (Generyki) ---
+        private readonly Repository<Quiz> _quizRepository;
+
         private Quiz? _currentQuiz;
 
         public MainWindow()
@@ -15,6 +19,9 @@ namespace ProjektKumulatywnyQuiz
             InitializeComponent();
             _db = new QuizDbContext();
             _db.Database.Migrate();
+
+            // --- ZMIANA 2: Inicjalizacja Repozytorium ---
+            _quizRepository = new Repository<Quiz>(_db);
 
             AddQuizBtn.Click += AddQuizBtn_Click;
             LoadBtn.Click += LoadBtn_Click;
@@ -51,8 +58,10 @@ namespace ProjektKumulatywnyQuiz
                 }
             };
 
-            _db.Quizzes.Add(quiz);
-            _db.SaveChanges();
+            // --- ZMIANA 3: Użycie Repozytorium do dodawania ---
+            // To realizuje wymóg użycia Generyków do zarządzania danymi
+            _quizRepository.Add(quiz);
+
             LoadQuizzes();
         }
 
@@ -61,6 +70,8 @@ namespace ProjektKumulatywnyQuiz
 
         private void LoadQuizzes()
         {
+            // Tutaj zostawiamy _db, bo potrzebujemy Include (eager loading),
+            // a nasze proste repozytorium tego nie obsługuje. To jest OK.
             var quizzes = _db.Quizzes
                 .Include(q => q.Questions)
                 .ThenInclude(a => a.Answers)
@@ -118,7 +129,9 @@ namespace ProjektKumulatywnyQuiz
             var selected = QuizList.SelectedItem.ToString();
             var id = int.Parse(selected.Split(':')[0]);
 
-            var quiz = _db.Quizzes.FirstOrDefault(q => q.Id == id);
+            // --- ZMIANA 4: Pobranie przez Repozytorium ---
+            var quiz = _quizRepository.GetById(id);
+
             if (quiz == null)
             {
                 MessageBox.Show("Nie znaleziono quizu");
@@ -133,7 +146,10 @@ namespace ProjektKumulatywnyQuiz
             }
 
             quiz.Title = newTitle;
-            _db.SaveChanges();
+
+            // --- ZMIANA 5: Aktualizacja przez Repozytorium ---
+            _quizRepository.Update(quiz);
+
             LoadQuizzes();
             MessageBox.Show("Quiz został zaktualizowany");
         }
@@ -150,10 +166,8 @@ namespace ProjektKumulatywnyQuiz
             var selected = QuizList.SelectedItem.ToString();
             var id = int.Parse(selected.Split(':')[0]);
 
-            var quiz = _db.Quizzes
-                .Include(q => q.Questions)
-                .ThenInclude(a => a.Answers)
-                .FirstOrDefault(q => q.Id == id);
+            // --- ZMIANA 6: Usuwanie przez Repozytorium ---
+            var quiz = _quizRepository.GetById(id);
 
             if (quiz == null)
             {
@@ -161,8 +175,8 @@ namespace ProjektKumulatywnyQuiz
                 return;
             }
 
-            _db.Quizzes.Remove(quiz);
-            _db.SaveChanges();
+            _quizRepository.Delete(quiz);
+
             LoadQuizzes();
             MessageBox.Show("Quiz został usunięty");
         }
