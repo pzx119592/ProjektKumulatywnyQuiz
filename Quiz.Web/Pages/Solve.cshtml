@@ -1,0 +1,27 @@
+﻿@page "{id:int}"
+@model SolveModel
+
+<h1>@Model.Quiz.Title</h1>
+
+<form method="post">
+    @foreach (var question in Model.Quiz.Questions)
+    {
+        <p><strong>@question.Content</strong></p>
+
+        @foreach (var answer in question.Answers)
+        {
+            <div>
+                <input type="radio"
+                       name="Answers[@question.Id]"
+                       value="@answer.Id" />
+                @answer.Content
+            </div>
+        }
+    }
+    <button type="submit">Sprawdź</button>
+</form>
+
+@if (Model.Score > 0)
+{
+    <p>Wynik: @Model.Score / @Model.Quiz.Questions.Count</p>
+}

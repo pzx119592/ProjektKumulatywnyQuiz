@@ -1,0 +1,15 @@
+﻿@page
+@model IndexModel
+
+<h1>Quizy</h1>
+
+<ul>
+@foreach (var quiz in Model.Quizzes)
+{
+    <li>
+        <a asp-page="/Solve" asp-route-id="@quiz.Id">
+            @quiz.Title
+        </a>
+    </li>
+}
+</ul>

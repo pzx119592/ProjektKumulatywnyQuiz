@@ -1,0 +1,120 @@
+﻿@using Quiz.Core.Models
+@inject Quiz.Core.Services.QuizService QuizService
+
+<h3>Quizy</h3>
+
+@if (selectedQuiz == null)
+{
+    <ul>
+        @foreach (var quiz in quizzes)
+        {
+            <li>
+                <button type="button"
+                        @onclick="() => SelectQuiz(quiz)">
+                    @quiz.Title
+                </button>
+            </li>
+        }
+    </ul>
+}
+else
+{
+    <h4>@selectedQuiz.Title</h4>
+
+    @foreach (var question in selectedQuiz.Questions)
+    {
+        <div style="margin-bottom:15px;" @key="question.Id">
+            <p><strong>@question.Content</strong></p>
+
+            @foreach (var answer in question.Answers)
+            {
+                var isSelected =
+                userAnswers.ContainsKey(question.Id)
+                && userAnswers[question.Id] == answer.Id;
+
+                <div style="display:flex; align-items:center; margin:4px 0;">
+
+                    <!-- ZNACZNIK -->
+                    <div style="
+                                    width:16px;
+                                    height:16px;
+                                    border:2px solid black;
+                                    margin-right:8px;
+                                    background-color:@(isSelected ? "black" : "white");
+                                ">
+                    </div>
+
+                    <!-- TEKST ODPOWIEDZI -->
+                    <button type="button"
+                            style="
+                                            border:none;
+                                            background:none;
+                                            padding:0;
+                                            text-align:left;
+                                            cursor:pointer;
+                                        "
+                            @onclick="() => SelectAnswer(question.Id, answer.Id)">
+                        @answer.Content
+                    </button>
+                </div>
+            }
+        </div>
+    }
+
+    <button type="button" @onclick="CheckAnswers">
+        Sprawdź
+    </button>
+
+    @if (score >= 0)
+    {
+        <p>Wynik: @score / @selectedQuiz.Questions.Count</p>
+    }
+
+    <button type="button" @onclick="Back">
+        Wróć
+    </button>
+}
+
+@code {
+    private IReadOnlyList<QuizModel> quizzes = new List<QuizModel>();
+    private QuizModel? selectedQuiz;
+    private Dictionary<int, int> userAnswers = new();
+    private int score = -1;
+
+    protected override void OnInitialized()
+    {
+        quizzes = QuizService.GetAllQuizzes();
+    }
+
+    void SelectQuiz(QuizModel quiz)
+    {
+        selectedQuiz = quiz;
+        userAnswers.Clear();
+        score = -1;
+    }
+
+    void SelectAnswer(int questionId, int answerId)
+    {
+        userAnswers[questionId] = answerId;
+    }
+
+    void CheckAnswers()
+    {
+        score = 0;
+
+        foreach (var q in selectedQuiz!.Questions)
+        {
+            if (userAnswers.TryGetValue(q.Id, out var answerId))
+            {
+                if (q.Answers.First(a => a.Id == answerId).IsCorrect)
+                    score++;
+            }
+        }
+    }
+
+    void Back()
+    {
+        selectedQuiz = null;
+        score = -1;
+    }
+}

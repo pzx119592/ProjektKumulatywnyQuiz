@@ -1,0 +1,50 @@
+﻿<Window x:Class="Quiz.WpfApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Quiz WPF" Height="520" Width="820">
+
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel>
+            <TextBox x:Name="FilterBox"
+                     Margin="0,0,0,5"
+                     TextChanged="FilterBox_TextChanged"/>
+
+            <ListBox x:Name="QuizList"
+                     DisplayMemberPath="Title"
+                     Height="200"
+                     SelectionChanged="QuizList_SelectionChanged"/>
+
+            <TextBox x:Name="QuizTitleBox"/>
+            <Button Content="Dodaj quiz" Click="AddQuiz_Click"/>
+            <Button Content="Zmień nazwę" Click="RenameQuiz_Click"/>
+            <Button Content="Usuń quiz" Click="DeleteQuiz_Click"/>
+        </StackPanel>
+
+        <StackPanel Grid.Column="1">
+            <ListBox x:Name="QuestionList"
+                     DisplayMemberPath="Content"
+                     Height="120"
+                     SelectionChanged="QuestionList_SelectionChanged"/>
+
+            <TextBox x:Name="QuestionBox"/>
+            <Button Content="Dodaj pytanie" Click="AddQuestion_Click"/>
+
+            <ListBox x:Name="AnswerList"
+                     DisplayMemberPath="Content"
+                     Height="120"/>
+
+            <TextBox x:Name="AnswerBox"/>
+            <CheckBox x:Name="IsCorrectCheckBox" Content="Poprawna"/>
+            <Button Content="Dodaj odpowiedź" Click="AddAnswer_Click"/>
+
+            <Button Content="Zapisz quiz do bazy"
+                    Margin="0,10,0,0"
+                    Click="SaveQuiz_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>
