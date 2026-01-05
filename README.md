@@ -1,19 +1,28 @@
-# Projekt Kumulatywny Quiz - Micha� Graczyk
+# Projekt Kumulatywny Quiz - Michał Graczyk
 
 1. Programowanie obiektowe:
-Zaprojektuj g��wne klasy systemu quiz�w, reprezentuj�ce Quiz, Pytanie i Odpowied�, stosuj�c odpowiednie zasady programowania obiektowego.
+Zaprojektuj główne klasy systemu quizów, reprezentujące Quiz, Pytanie i Odpowiedź, stosując odpowiednie zasady programowania obiektowego.
 
 2. Interfejsy i abstrakcja:
-Utw�rz interfejsy takie jak IQuiz, IQuestion i IAnswer w celu abstrakcji obs�ugi danych.
+Utwórz interfejsy takie jak IQuiz, IQuestion i IAnswer w celu abstrakcji obsługi danych.
 
 3. Generyki:
-U�yj generyk�w do zarz�dzania danymi zwi�zanymi z quizami.
+Użyj generyków do zarządzania danymi związanymi z quizami.
 
 4. WPF:
-Stw�rz aplikacj� desktopow� WPF dla swojego quizu.
+Stwórz aplikację desktopową WPF dla swojego quizu.
 
 5. Entity Framework Core:
-Skonfiguruj baz� danych dla quiz�w i pyta� przy u�yciu Entity Framework Core i zaimplementuj operacje CRUD.
+Skonfiguruj bazę danych dla quizów i pytań przy użyciu Entity Framework Core i zaimplementuj operacje CRUD.
 
 6. LINQ:
-U�yj zapyta� LINQ do filtrowania lub wyszukiwania quiz�w.
+Użyj zapytań LINQ do filtrowania lub wyszukiwania quizów.
+
+7. Razor Pages:
+Stwórz interfejs użytkownika przy użyciu Razor Pages do wyświetlania quizów i umożliwienia użytkownikom ich rozwiązywania.
+
+8. Blazor:
+Przekształć część swojego interfejsu Razor w komponent Blazor.
+
+9. Współbieżność/Programowanie asynchroniczne:
+Użyj async i await do wczytywania danych quizu z zewnętrznego źródła.
