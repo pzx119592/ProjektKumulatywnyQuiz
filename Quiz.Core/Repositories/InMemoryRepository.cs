@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Quiz.Core.Repositories;
 
 namespace Quiz.ConsoleApp.Repositories;
@@ -21,9 +22,7 @@ public class InMemoryRepository<T> : IRepository<T>
 
     public void Update(T item)
     {
-        // InMemory:
-        // obiekt jest już zmodyfikowany w pamięci,
-        // więc nie trzeba nic robić
+        // W pamięci nic nie robimy – obiekt już jest zmieniony
     }
 
     public IReadOnlyList<T> GetAll()
@@ -31,13 +30,20 @@ public class InMemoryRepository<T> : IRepository<T>
         return _items;
     }
 
-    public T? GetById(int id)
+    // 🔹 ASYNC – wymagane przez interfejs
+    public Task<IReadOnlyList<T>> GetAllAsync()
     {
-        return _items.FirstOrDefault(item =>
+        return Task.FromResult<IReadOnlyList<T>>(_items);
+    }
+
+    public Task<T?> GetByIdAsync(int id)
+    {
+        var item = _items.FirstOrDefault(item =>
         {
-            var property = item?.GetType().GetProperty("Id");
-            if (property == null) return false;
-            return (int)property.GetValue(item)! == id;
+            var prop = item?.GetType().GetProperty("Id");
+            return prop != null && (int)prop.GetValue(item)! == id;
         });
+
+        return Task.FromResult(item);
     }
 }

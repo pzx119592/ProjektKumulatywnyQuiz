@@ -8,6 +8,9 @@ using Quiz.Core.Models;
 using Quiz.Core.Repositories;
 using Quiz.Infrastructure.Entities;
 using Quiz.Infrastructure.Persistence;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Quiz.Infrastructure.Repositories;
 
@@ -53,6 +56,33 @@ public class EfQuizRepository : IRepository<QuizModel>
             .Select(MapToModel)
             .ToList();
     }
+
+    // 🔹 ASYNC — TO JEST KLUCZ DO ZALICZENIA
+    public async Task<IReadOnlyList<QuizModel>> GetAllAsync()
+    {
+        var entities = await _context.Quizzes
+            .Include(q => q.Questions)
+            .ThenInclude(q => q.Answers)
+            .AsNoTracking()
+            .ToListAsync();
+
+        return entities.Select(MapToModel).ToList();
+    }
+
+    public async Task<QuizModel?> GetByIdAsync(int id)
+    {
+        var entity = await _context.Quizzes
+            .Include(q => q.Questions)
+            .ThenInclude(q => q.Answers)
+            .AsNoTracking()
+            .FirstOrDefaultAsync(q => q.Id == id);
+
+        if (entity == null)
+            return null;
+
+        return MapToModel(entity);
+    }
+
 
     private static QuizEntity MapToEntity(QuizModel quiz)
     {

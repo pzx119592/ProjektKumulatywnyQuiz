@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Quiz.Core.Models;
 using Quiz.Core.Repositories;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Quiz.Core.Services;
 
@@ -35,5 +37,16 @@ public class QuizService
     public IReadOnlyList<QuizModel> GetAllQuizzes()
     {
         return _quizRepository.GetAll();
+    }
+
+    // 🔹 ASYNC — UŻYWANE W WPF
+    public async Task<IReadOnlyList<QuizModel>> GetAllQuizzesAsync()
+    {
+        return await _quizRepository.GetAllAsync();
+    }
+
+    public async Task<QuizModel?> GetQuizByIdAsync(int id)
+    {
+        return await _quizRepository.GetByIdAsync(id);
     }
 }
