@@ -30,7 +30,6 @@ public class InMemoryRepository<T> : IRepository<T>
         return _items;
     }
 
-    // 🔹 ASYNC – wymagane przez interfejs
     public Task<IReadOnlyList<T>> GetAllAsync()
     {
         return Task.FromResult<IReadOnlyList<T>>(_items);

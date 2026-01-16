@@ -16,6 +16,7 @@ namespace Quiz.Infrastructure.Repositories;
 
 public class EfQuizRepository : IRepository<QuizModel>
 {
+    // Repozytorium do zapisu i odczytu quizów z bazy danych
     private readonly QuizDbContext _context;
 
     public EfQuizRepository(QuizDbContext context)
@@ -23,6 +24,7 @@ public class EfQuizRepository : IRepository<QuizModel>
         _context = context;
     }
 
+    // Metody Add / Remove / Update
     public void Add(QuizModel quiz)
     {
         _context.Quizzes.Add(MapToEntity(quiz));
@@ -47,6 +49,7 @@ public class EfQuizRepository : IRepository<QuizModel>
         _context.SaveChanges();
     }
 
+    // Pobieranie quizów razem z pytaniami i odpowiedziami (sync i async)
     public IReadOnlyList<QuizModel> GetAll()
     {
         return _context.Quizzes
@@ -57,7 +60,6 @@ public class EfQuizRepository : IRepository<QuizModel>
             .ToList();
     }
 
-    // 🔹 ASYNC — TO JEST KLUCZ DO ZALICZENIA
     public async Task<IReadOnlyList<QuizModel>> GetAllAsync()
     {
         var entities = await _context.Quizzes
@@ -69,6 +71,7 @@ public class EfQuizRepository : IRepository<QuizModel>
         return entities.Select(MapToModel).ToList();
     }
 
+    // Asynchroniczne pobieranie jednego quizu po ID
     public async Task<QuizModel?> GetByIdAsync(int id)
     {
         var entity = await _context.Quizzes
@@ -83,7 +86,7 @@ public class EfQuizRepository : IRepository<QuizModel>
         return MapToModel(entity);
     }
 
-
+    // Mapowanie: zamiana danych z bazy na obiekty aplikacji i odwrotnie
     private static QuizEntity MapToEntity(QuizModel quiz)
     {
         return new QuizEntity

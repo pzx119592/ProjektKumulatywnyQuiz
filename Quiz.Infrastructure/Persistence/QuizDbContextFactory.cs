@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore.Design;
 
 namespace Quiz.Infrastructure.Persistence;
 
+// Klasa pomocnicza do EF, łączenie się z bazą danych przy migracjach
 public class QuizDbContextFactory : IDesignTimeDbContextFactory<QuizDbContext>
 {
     public QuizDbContext CreateDbContext(string[] args)

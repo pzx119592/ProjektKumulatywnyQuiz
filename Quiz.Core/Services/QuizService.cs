@@ -39,7 +39,7 @@ public class QuizService
         return _quizRepository.GetAll();
     }
 
-    // 🔹 ASYNC — UŻYWANE W WPF
+    //ASYNC — UŻYWANE W WPF
     public async Task<IReadOnlyList<QuizModel>> GetAllQuizzesAsync()
     {
         return await _quizRepository.GetAllAsync();
